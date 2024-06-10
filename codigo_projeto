@@ -1,0 +1,97 @@
+import pandas as pd
+
+path = r"C:\Users\Matheus\Planilha.xlsx"
+path
+
+df = pd.read_excel(path)
+
+df.head()
+
+df.describe()
+
+df.shape
+
+df["sintomas"].describe()
+
+filtro = ["sintomas", "profissionalSaude", "profissionalSeguranca", "idade", "municipio"]
+df[filtro]
+
+df["idade"].describe()
+
+df["profissionalSaude"].describe()
+
+df_filtro = df.drop_duplicates(subset="sintomas")
+df_filtro
+
+import seaborn as sns
+color = sns.color_palette()
+get_ipython().run_line_magic('matplotlib', 'inline')
+import plotly.offline as py
+py.init_notebook_mode(connected=True)
+import plotly.graph_objs as go
+import plotly.tools as tls
+import plotly.express as px
+import numpy as np
+
+dist = df['sexo'].value_counts()
+colors = ['mediumturquoise', 'darkorange']
+trace = go.Pie(values=(np.array(dist)),labels=dist.index)
+layout = go.Layout(title='Resultado')
+data = [trace]
+fig = go.Figure(trace,layout)
+fig.update_traces(marker=dict(colors=colors, line=dict(color='#000000', width=0)))
+fig.show()
+
+fig = px.scatter(df, x='idade', y='sintomas')
+fig.update_traces(marker_color="turquoise",marker_line_color='rgb(8,48,107)',
+                  marker_line_width=0.5)
+fig.update_layout(title_text='Idade e Sintomas')
+fig.show()
+
+fig = px.box(df, x='sexo', y='idade')
+fig.update_traces(marker_color="midnightblue",marker_line_color='rgb(8,48,107)',
+                  marker_line_width=1.5)
+fig.update_layout(title_text='Idade e Resultado')
+fig.show()
+
+dist = df['profissionalSaude'].value_counts()
+colors = ['mediumturquoise', 'darkorange']
+trace = go.Pie(values=(np.array(dist)),labels=dist.index)
+layout = go.Layout(title='Resultado')
+data = [trace]
+fig = go.Figure(trace,layout)
+fig.update_traces(marker=dict(colors=colors, line=dict(color='#000000', width=0)))
+fig.show()
+
+fig = px.box(df, x='sexo', y='sintomas')
+fig.update_traces(marker_color="midnightblue",marker_line_color='rgb(8,48,107)',
+                  marker_line_width=5.5)
+fig.update_layout(title_text='Sexo e Sintomas')
+fig.show()
+
+fig = px.box(df, x='municipio', y='sintomas')
+fig.update_traces(marker_color="midnightblue",marker_line_color='rgb(8,48,107)',
+                  marker_line_width=5.5)
+fig.update_layout(title_text='Municipios e Sintomas')
+fig.show()
+
+dist = df['municipio'].value_counts()
+colors = ['mediumturquoise', 'darkorange']
+trace = go.Pie(values=(np.array(dist)),labels=dist.index)
+layout = go.Layout(title='Resultado')
+data = [trace]
+fig = go.Figure(trace,layout)
+fig.update_traces(marker=dict(colors=colors, line=dict(color='#000000', width=0)))
+fig.show()
+
+fig = px.scatter(df, x='municipio', y='sintomas')
+fig.update_traces(marker_color="turquoise",marker_line_color='rgb(8,48,107)',
+                  marker_line_width=0.5)
+fig.update_layout(title_text='Municipios e Sintomas')
+fig.show()
+
+fig = px.box(df, x='municipio', y='idade')
+fig.update_traces(marker_color="midnightblue",marker_line_color='rgb(8,48,107)',
+                  marker_line_width=1.5)
+fig.update_layout(title_text='Idade e Resultado')
+fig.show()
